@@ -170,6 +170,18 @@
   padding-top: 0.9rem;
 }
 
+.admin-sidebar__made {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  padding: 0.25rem 0.25rem 0;
+}
+
+.admin-sidebar__made strong {
+  color: inherit;
+  font-weight: 600;
+}
+
 /* ---------- Main ---------- */
 .admin-main {
   min-width: 0;
