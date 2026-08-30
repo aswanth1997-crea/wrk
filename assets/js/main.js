@@ -7,14 +7,25 @@
 
   var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------------- Schedule data (from original site) ---------------- */
-  var MATERIALS = {
-    1: [
-      { title: "Lecture 1 - Welcome to the Course", type: "Lecture", file: "/materials/week1/lecture1-welcome.pdf" },
-      { title: "Lecture 2 - Evolution of Artificial Intelligence", type: "Lecture", file: "/materials/week1/ai_iiitdmk_2nd.pdf" }
-    ],
-    2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: [], 10: [], 11: [], 12: [], 13: [], 14: []
+  /* ---------------- Schedule data (static resources) ---------------- */
+  // Map teaching weeks to units. Resources live in resources/AD203/Unit-N/
+  // and are listed in resources/data.js (window.COURSE_DATA.resources).
+  var WEEK_UNIT = {
+    1: 1, 2: 1,
+    3: 2, 4: 2, 5: 2,
+    6: 3, 7: 3,
+    8: 4, 9: 4, 10: 4,
+    11: 5, 12: 5,
+    13: 6, 14: 6
   };
+
+  function resourcesForWeek(week) {
+    var unitNum = WEEK_UNIT[week];
+    var data = window.COURSE_DATA || { resources: [] };
+    return (data.resources || []).filter(function (r) {
+      return String(r.unit || "").replace("Unit ", "") === String(unitNum);
+    });
+  }
 
   var SCHEDULE = [
     { week: 1, title: "Introduction to Artificial Intelligence", topics: "History of AI, Philosophy of AI, Definitions and Applications" },
@@ -46,28 +57,11 @@
     info: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>'
   };
 
-  // Base path for material files. Resolves relative to the current page so the
-  // site works both from a static server subpath and from file://.
-  var BASE = (function () {
-    var path = window.location.pathname || "/";
-    if (!path.endsWith("/")) path = path.slice(0, path.lastIndexOf("/") + 1);
-    return path;
-  })();
-
-  function materialIcon(type) {
-    switch (type) {
-      case "Lecture": return ICONS.bookOpen;
-      case "Lab": return ICONS.fileCode;
-      case "Assignment": return ICONS.notebookPen;
-      default: return ICONS.fileText;
-    }
-  }
-
   /* ---------------- Render schedule ---------------- */
   var scheduleList = document.getElementById("scheduleList");
   if (scheduleList) {
     var rows = SCHEDULE.map(function (entry) {
-      var has = (MATERIALS[entry.week] || []).length > 0;
+      var has = resourcesForWeek(entry.week).length > 0;
       var row = document.createElement("div");
       row.className = "schedule-row";
       row.setAttribute("data-reveal", "");
@@ -105,7 +99,7 @@
   function openModal(week) {
     if (!modal || !modalBody) return;
     lastFocused = document.activeElement;
-    var list = MATERIALS[week] || [];
+    var list = resourcesForWeek(week);
 
     var html = "";
     if (list.length === 0) {
@@ -116,26 +110,21 @@
         "</div>";
     } else {
       list.forEach(function (item) {
-        var href = BASE + item.file;
+        var href = item.file;
         html +=
           '<div class="material">' +
-            '<span class="material__icon">' + materialIcon(item.type) + "</span>" +
+            '<span class="material__icon">' + ICONS.fileText + "</span>" +
             '<div class="material__meta">' +
               '<p class="material__name">' + esc(item.title) + "</p>" +
-              '<p class="material__type">' + esc(item.type) + "</p>" +
+              '<p class="material__type">' + esc((item.session || "") + (item.session ? " · " : "") + String(item.type || "").toUpperCase()) + "</p>" +
             "</div>" +
             '<div class="material__actions">' +
-              '<a class="material__action material__action--view" href="' + href + '" target="_blank" rel="noopener">' + ICONS.eye + "View</a>" +
-              '<a class="material__action material__action--dl" href="' + href + '" download>' + ICONS.download + "Download</a>" +
+              '<a class="material__action material__action--view" href="' + esc(href) + '" target="_blank" rel="noopener">' + ICONS.eye + "View / Open</a>" +
+              '<a class="material__action material__action--dl" href="' + esc(href) + '" download>' + ICONS.download + "Download</a>" +
             "</div>" +
           "</div>";
       });
     }
-
-    html +=
-      '<div class="modal__notice">' + ICONS.info +
-        "<span>Materials link to the live course site; PDF files are not bundled in this offline copy.</span>" +
-      "</div>";
 
     modalBody.innerHTML = html;
     modalTitle.textContent = "Week " + week + " Materials";

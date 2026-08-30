@@ -1,7 +1,7 @@
 /* ============================================================
    AD203 Course Portal — student portal JS
-   Renders the student-facing site from the public API
-   (published items only). Data flows: admin → API → here.
+   Renders the student-facing site from the static COURSE_DATA
+   (resources/data.js). No server required.
    Includes: course switcher, dashboard, tabs, search/filter,
    announcements, dates, syllabus (units/topics), schedule.
    ============================================================ */
@@ -9,7 +9,6 @@
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   var state = {
     courses: [],
@@ -81,6 +80,16 @@
     return u ? u.title : "Unit";
   }
 
+  /* Resources in the static data use unit labels like "Unit 1".
+     Map them to the matching unit id in the current course. */
+  function unitIdFromLabel(label) {
+    if (!label || !currentCourse || !currentCourse.units) return "";
+    var m = String(label).match(/(\d+)/);
+    var idx = m ? parseInt(m[1], 10) - 1 : -1;
+    var u = currentCourse.units[idx];
+    return u ? u.id : "";
+  }
+
   function unitCode(id) {
     var u = unitById(id);
     if (!u || !currentCourse) return "";
@@ -119,16 +128,10 @@
   }
 
   /* ---------------- Data loading ---------------- */
-  function showServerNotice(on) {
-    var n = document.getElementById("serverNotice");
-    if (n) n.hidden = !on;
-  }
-
   async function loadCourses() {
     try {
       var data = await API.courses();
       state.courses = data.courses || [];
-      applySettings(data.settings);
       var saved = null;
       try { saved = localStorage.getItem("ad203-active-course"); } catch (e) {}
       var first = state.courses[0];
@@ -138,55 +141,10 @@
         renderCourseSwitcher();
         await loadCourse(courseId);
       } else {
-        showServerNotice(true);
         renderEmptyAll();
       }
     } catch (e) {
-      showServerNotice(true);
       renderEmptyAll();
-    }
-  }
-
-  function applySettings(s) {
-    if (!s) return;
-    var badge = document.querySelector(".hero__badge");
-    if (badge && s.heroBadge) {
-      var dot = badge.querySelector(".hero__badge-dot");
-      // keep the dot element, replace the trailing text with the setting value
-      var textNodes = Array.prototype.slice.call(badge.childNodes).filter(function (n) {
-        return n.nodeType === Node.TEXT_NODE;
-      });
-      textNodes.forEach(function (n) { n.nodeValue = ""; });
-      if (dot) {
-        var span = document.createElement("span");
-        span.textContent = " " + s.heroBadge;
-        dot.after(span);
-      } else {
-        badge.textContent = s.heroBadge;
-      }
-    }
-    var title = document.querySelector(".hero__title");
-    if (title && s.heroTitle) {
-      var span = title.querySelector(".hero__title-accent");
-      if (span) {
-        var base = s.heroTitle.replace("Intelligence", "").trim();
-        title.childNodes[0].nodeValue = base ? base + " " : "";
-        span.textContent = s.heroTitle.indexOf("Intelligence") !== -1 ? "Intelligence" : s.heroTitle;
-      } else {
-        title.textContent = s.heroTitle;
-      }
-    }
-    var sub = document.querySelector(".hero__code");
-    if (sub && s.heroSub) sub.textContent = s.heroSub;
-    var lede = document.querySelector(".hero__lede");
-    if (lede && s.heroLede) lede.textContent = s.heroLede;
-    var about = document.querySelector(".footer__about");
-    if (about && s.footerAbout) about.textContent = s.footerAbout;
-    var copy = document.querySelector(".footer__copy");
-    if (copy && s.footerCopyright) {
-      var y = document.getElementById("year");
-      var yr = y ? y.textContent : new Date().getFullYear();
-      copy.innerHTML = "&copy; " + esc(yr) + " " + esc(s.footerCopyright);
     }
   }
 
@@ -211,7 +169,6 @@
       populateUnitFilter();
       renderAll();
     } catch (e) {
-      showServerNotice(true);
       renderEmptyAll();
     }
   }
@@ -234,7 +191,7 @@
     var anns = state.announcements.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }).slice(0, 3);
     var today = new Date().toISOString().slice(0, 10);
     var dates = state.dates.slice().filter(function (d) { return d.date >= today; }).sort(function (a, b) { return a.date.localeCompare(b.date); }).slice(0, 3);
-    var ups = state.resources.slice().sort(function (a, b) { return String(b.created || b.date || "").localeCompare(String(a.created || a.date || "")); }).slice(0, 3);
+    var ups = state.resources.slice().slice(0, 3);
 
     if (dA) dA.innerHTML = anns.map(function (a) {
       return '<div class="dash-item"><span class="dash-item__icon">' + ICONS.megaphone + "</span>" +
@@ -251,7 +208,7 @@
     if (dU) dU.innerHTML = ups.map(function (r) {
       return '<div class="dash-item"><span class="dash-item__icon">' + ICONS.upload + "</span>" +
         '<div class="dash-item__body"><div class="dash-item__title">' + esc(r.title) + "</div>" +
-        '<div class="dash-item__meta">' + esc(unitName(r.unitId)) + " &middot; " + esc(typeLabel(r.type)) + "</div></div></div>";
+        '<div class="dash-item__meta">' + esc(r.unit || "Unit") + " &middot; " + esc(typeLabel(r.type)) + "</div></div></div>";
     }).join("") || '<div class="hub-empty">' + ICONS.empty + "<p>No uploads yet</p></div>";
   }
 
@@ -295,7 +252,7 @@
     var grid = document.createElement("div");
     grid.className = "units-grid";
     units.forEach(function (u) {
-      var resCount = state.resources.filter(function (r) { return r.unitId === u.id; }).length;
+      var resCount = state.resources.filter(function (r) { return unitIdFromLabel(r.unit) === u.id; }).length;
       var topics = (u.topics || []).slice(0, 6);
       grid.insertAdjacentHTML("beforeend",
         '<article class="unit-card" data-reveal>' +
@@ -304,7 +261,7 @@
           '<h3 class="unit-card__title">' + esc(u.title) + "</h3>" +
           (u.weeks ? '<p class="unit-card__weeks">' + esc(u.weeks) + "</p>" : "") +
           '<div class="unit-card__topics">' + topics.map(function (t) { return '<span class="unit-card__topic">' + esc(t.title) + "</span>"; }).join("") + "</div>" +
-          '<p class="unit-card__count">' + resCount + " resource" + (resCount === 1 ? "" : "s") + " &middot; " + (u.topics || []).length + " topics</p>" +
+          '<p class="unit-card__count">' + resCount + " resource" + (resCount === 1 ? "" : "s") + "</p>" +
         "</article>");
     });
     panel.innerHTML = "";
@@ -314,10 +271,10 @@
   }
 
   function resourceMatches(r) {
-    var hay = (r.title + " " + (r.desc || "") + " " + unitName(r.unitId) + " " + typeLabel(r.type) + " " + (r.tags || []).join(" ")).toLowerCase();
+    var hay = (r.title + " " + (r.desc || "") + " " + (r.unit || "") + " " + (r.session || "") + " " + typeLabel(r.type) + " " + (r.tags || []).join(" ")).toLowerCase();
     var q = state.searchQ.toLowerCase();
     if (q && hay.indexOf(q) === -1) return false;
-    if (state.filterUnit && r.unitId !== state.filterUnit) return false;
+    if (state.filterUnit && unitIdFromLabel(r.unit) !== state.filterUnit) return false;
     if (state.filterType && r.type !== state.filterType) return false;
     return true;
   }
@@ -330,13 +287,13 @@
       '<h3 class="res-card__title">' + esc(r.title) + "</h3>" +
       (r.desc ? '<p class="res-card__desc">' + esc(r.desc) + "</p>" : "") +
       '<div class="res-card__meta">' +
-        "<span>" + esc(unitName(r.unitId)) + "</span>" +
-        "<span>" + esc(fmtShort(r.date || r.created)) + "</span>" +
-        (r.size ? "<span>" + esc(r.size) + "</span>" : "") +
+        "<span>" + esc(r.unit || "Unit") + "</span>" +
+        (r.session ? "<span>" + esc(r.session) + "</span>" : "") +
+        "<span>" + esc(typeLabel(r.type)) + "</span>" +
       "</div>" +
       '<div class="res-card__actions">' +
         (href && href !== "#"
-          ? '<a class="btn btn--primary btn--sm" href="' + esc(href) + '" target="_blank" rel="noopener">' + ICONS.eye + (r.type === "link" ? "Open" : "Preview") + "</a>" +
+          ? '<a class="btn btn--primary btn--sm" href="' + esc(href) + '" target="_blank" rel="noopener">' + ICONS.eye + "View / Open</a>" +
             (r.type !== "link" ? '<a class="btn btn--ghost btn--sm" href="' + esc(href) + '" download>' + ICONS.download + "Download</a>" : "")
           : '<span class="res-card__desc" style="color:var(--color-muted);">File not uploaded yet</span>') +
       "</div></article>";
@@ -553,14 +510,6 @@
     renderAll();
   });
 
-  /* ---------------- Dismiss server notice ---------------- */
-  document.addEventListener("click", function (e) {
-    if (e.target.closest("[data-dismiss-notice]")) {
-      var n = document.getElementById("serverNotice");
-      if (n) n.hidden = true;
-    }
-  });
-
   /* ---------------- Reveal observer ---------------- */
   var revealObs = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -582,17 +531,6 @@
       el.dataset.revealObserved = "1";
       revealObs.observe(el);
     });
-  }
-
-  /* ---------------- Card spotlight (mouse-position highlight on cards) ---------------- */
-  if (finePointer) {
-    document.addEventListener("pointermove", function (e) {
-      var card = e.target.closest && e.target.closest(".res-card, .announce-card, .dates-item, .unit-card, .dash-item");
-      if (!card) return;
-      var r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%");
-      card.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
-    }, { passive: true });
   }
 
   /* ---------------- Init ---------------- */

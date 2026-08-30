@@ -2,7 +2,7 @@
    AD203 Course Portal — enhancement layer
    Uses ONLY the existing design tokens (indigo/amber/warm neutrals).
    Adds: dashboard, announcements, dates timeline, resource hub tabs,
-   search, manage mode, cursor glow, card spotlight, micro-interactions.
+   search, manage mode, micro-interactions.
    ============================================================ */
 
 /* ---------- Visually hidden (a11y) ---------- */
@@ -279,23 +279,6 @@
   border-color: rgba(79, 70, 229, 0.4);
   box-shadow: var(--shadow-md);
 }
-
-/* mouse-position spotlight (indigo) */
-.res-card::before,
-.announce-card::before,
-.dates-item::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(79, 70, 229, 0.08), transparent 60%);
-  opacity: 0;
-  transition: opacity var(--dur) var(--ease-out);
-  pointer-events: none;
-}
-
-.res-card:hover::before,
-.announce-card:hover::before,
-.dates-item:hover::before { opacity: 1; }
 
 .res-card__top {
   display: flex;
