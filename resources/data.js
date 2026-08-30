@@ -37,16 +37,14 @@ window.COURSE_DATA = {
      }
   */
   resources: [
-    /* Example entry — remove once real files are added:
     {
-      "title": "Introduction to AI",
+      "title": "AI Introduction 1",
       "type": "pdf",
       "course": "AD203",
       "unit": "Unit 1",
-      "session": "Session 1",
-      "file": "resources/AD203/Unit-1/introduction-to-ai.pdf"
+      "session": "Introduction to Artificial Intelligence",
+      "file": "resources/AD203/Unit-1/ai_iiitdmk_1st.pdf"
     }
-    */
   ],
 
   /* Static content mirrored from the site (kept here so the
