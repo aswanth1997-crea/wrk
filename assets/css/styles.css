@@ -519,6 +519,17 @@ ul {
   .nav__toggle {
     display: inline-flex;
   }
+
+  /* keep the course select compact on small screens */
+  .course-switch select {
+    max-width: 120px;
+    font-size: 0.82rem;
+    padding: 0.5rem 1.7rem 0.5rem 0.7rem;
+  }
+
+  .nav__inner {
+    gap: 0.4rem;
+  }
 }
 
 /* The nav has 6 links; the CTA only fits comfortably from 1024px up */
@@ -1887,7 +1898,12 @@ ul {
   .watermark {
     left: 50%;
     right: auto;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 255, 255, 0.95);
   }
   .watermark:hover {
     transform: translateX(-50%) translateY(-2px) scale(1.04);
