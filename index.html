@@ -162,210 +162,80 @@
       </div>
     </section>
 
-    <!-- ======================= RESOURCE HUB ======================= -->
+    <!-- ======================= COURSE INFO ======================= -->
     <section class="section section--white" id="resources">
       <div class="container">
         <div class="section-head section-head--center">
-          <p class="eyebrow">Course Resource Hub</p>
-          <h2 class="section-title">Course Information &amp; Materials</h2>
-          <p class="section-lede">Everything you need for the course — overview, unit-wise resources, presentations, study materials, assignments, question bank and references.</p>
+          <p class="eyebrow">Course Information</p>
+          <h2 class="section-title">Course Overview</h2>
+          <p class="section-lede">Everything you need to know about the course at a glance.</p>
         </div>
 
-        <div class="hub-search" role="search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <label class="visually-hidden" for="hubSearchInput">Search course resources</label>
-          <input id="hubSearchInput" type="search" placeholder="Search resources, topics, units, questions…" autocomplete="off">
-          <span class="hub-search__count" id="hubSearchCount" aria-live="polite"></span>
-        </div>
-
-        <div class="hub-filters" id="hubFilters">
-          <label>
-            <span class="visually-hidden">Filter by unit</span>
-            <select id="hubUnitFilter">
-              <option value="">All units</option>
-              <option value="1">Unit I</option>
-              <option value="2">Unit II</option>
-              <option value="3">Unit III</option>
-              <option value="4">Unit IV</option>
-              <option value="5">Unit V</option>
-              <option value="6">Unit VI</option>
-            </select>
-          </label>
-          <label>
-            <span class="visually-hidden">Filter by type</span>
-            <select id="hubTypeFilter">
-              <option value="">All types</option>
-              <option value="ppt">Presentations</option>
-              <option value="pdf">PDF / Notes</option>
-              <option value="assignment">Assignments</option>
-              <option value="question">Question Bank</option>
-              <option value="reference">References</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="tabs" id="hubTabs">
-          <div class="tabs__bar" role="tablist" aria-label="Resource sections" id="hubTabBar">
-            <button class="tabs__tab is-active" role="tab" id="tab-overview" aria-selected="true" aria-controls="panel-overview" data-tab="overview">Overview</button>
-            <button class="tabs__tab" role="tab" id="tab-units" aria-selected="false" aria-controls="panel-units" data-tab="units" tabindex="-1">Units</button>
-            <button class="tabs__tab" role="tab" id="tab-ppts" aria-selected="false" aria-controls="panel-ppts" data-tab="ppts" tabindex="-1">Presentations</button>
-            <button class="tabs__tab" role="tab" id="tab-materials" aria-selected="false" aria-controls="panel-materials" data-tab="materials" tabindex="-1">Study Materials</button>
-            <button class="tabs__tab" role="tab" id="tab-assignments" aria-selected="false" aria-controls="panel-assignments" data-tab="assignments" tabindex="-1">Assignments</button>
-            <button class="tabs__tab" role="tab" id="tab-questions" aria-selected="false" aria-controls="panel-questions" data-tab="questions" tabindex="-1">Question Bank</button>
-            <button class="tabs__tab" role="tab" id="tab-references" aria-selected="false" aria-controls="panel-references" data-tab="references" tabindex="-1">References</button>
-          </div>
-
-          <div class="tabs__panels">
-            <!-- Overview: existing course info cards -->
-            <div class="tabs__panel is-active" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" data-panel="overview">
-              <div class="info-grid">
-                <article class="card info-card" data-reveal>
-                  <div class="card__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  </div>
-                  <p class="card__kicker">Instructor</p>
-                  <h3 class="card__title">Dr. Alapan Kuila</h3>
-                  <p class="card__text">Assistant Professor, Department of Computer Science</p>
-                </article>
-
-                <article class="card info-card" data-reveal style="--reveal-delay:60ms">
-                  <div class="card__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
-                  </div>
-                  <p class="card__kicker">Teaching Assistant</p>
-                  <h3 class="card__title">Enjamul Islam Khan</h3>
-                  <p class="card__text">Teaching Assistant</p>
-                </article>
-
-                <article class="card info-card" data-reveal style="--reveal-delay:120ms">
-                  <div class="card__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
-                  </div>
-                  <p class="card__kicker">Credits</p>
-                  <h3 class="card__title">3-0-3</h3>
-                  <p class="card__text">Lecture &bull; Tutorial &bull; Practical</p>
-                </article>
-
-                <article class="card info-card" data-reveal>
-                  <div class="card__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>
-                  </div>
-                  <p class="card__kicker">Classroom</p>
-                  <h3 class="card__title">CS102</h3>
-                  <p class="card__text">IIITDM Kurnool</p>
-                </article>
-
-                <article class="card info-card" data-reveal style="--reveal-delay:60ms">
-                  <div class="card__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6h4"/></svg>
-                  </div>
-                  <p class="card__kicker">Class Schedule</p>
-                  <div class="info-card__lines">
-                    <div class="info-card__line">Wednesday &bull; 10:00 &ndash; 11:00</div>
-                    <div class="info-card__line">Thursday &bull; 09:00 &ndash; 10:00</div>
-                    <div class="info-card__line">Friday &bull; 10:00 &ndash; 11:00</div>
-                  </div>
-                  <p class="card__sub">Autumn 2026</p>
-                </article>
-
-                <article class="card info-card" data-reveal style="--reveal-delay:120ms">
-                  <div class="card__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
-                  </div>
-                  <p class="card__kicker">Email</p>
-                  <h3 class="card__title">alapan.cse@iiitk.ac.in</h3>
-                  <p class="card__text">Office Hours: TBA</p>
-                </article>
-
-                <article class="card info-card" data-reveal>
-                  <div class="card__icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
-                  </div>
-                  <p class="card__kicker">Prerequisites</p>
-                  <h3 class="card__title">Python Programming, Data Structures, Discrete Mathematics, Basic Probability, Linear Algebra</h3>
-                </article>
-              </div>
-            </div>
-
-            <!-- Units -->
-            <div class="tabs__panel" role="tabpanel" id="panel-units" aria-labelledby="tab-units" data-panel="units" hidden></div>
-            <!-- Presentations -->
-            <div class="tabs__panel" role="tabpanel" id="panel-ppts" aria-labelledby="tab-ppts" data-panel="ppts" hidden></div>
-            <!-- Study materials -->
-            <div class="tabs__panel" role="tabpanel" id="panel-materials" aria-labelledby="tab-materials" data-panel="materials" hidden></div>
-            <!-- Assignments -->
-            <div class="tabs__panel" role="tabpanel" id="panel-assignments" aria-labelledby="tab-assignments" data-panel="assignments" hidden></div>
-            <!-- Question bank -->
-            <div class="tabs__panel" role="tabpanel" id="panel-questions" aria-labelledby="tab-questions" data-panel="questions" hidden></div>
-            <!-- References -->
-            <div class="tabs__panel" role="tabpanel" id="panel-references" aria-labelledby="tab-references" data-panel="references" hidden></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================= LEARNING JOURNEY ======================= -->
-    <section class="section" id="journey">
-      <div class="container">
-        <div class="section-head section-head--center">
-          <p class="eyebrow">Learning Journey</p>
-          <h2 class="section-title">What You'll Learn</h2>
-          <p class="section-lede">This course takes you from the fundamentals of Artificial Intelligence to modern Large Language Models through a carefully designed sequence of topics.</p>
-        </div>
-
-        <div class="journey-grid">
-          <article class="card journey-card" data-reveal>
-            <span class="journey-card__num" aria-hidden="true">01</span>
+        <div class="info-grid">
+          <article class="card info-card" data-reveal>
             <div class="card__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-            <h3 class="journey-card__title">AI Foundations</h3>
-            <p class="journey-card__text">Understand intelligent agents, PEAS, rationality and problem formulation.</p>
+            <p class="card__kicker">Instructor</p>
+            <h3 class="card__title">Dr. Alapan Kuila</h3>
+            <p class="card__text">Assistant Professor, Department of Computer Science</p>
           </article>
 
-          <article class="card journey-card" data-reveal style="--reveal-delay:60ms">
-            <span class="journey-card__num" aria-hidden="true">02</span>
+          <article class="card info-card" data-reveal style="--reveal-delay:60ms">
             <div class="card__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
             </div>
-            <h3 class="journey-card__title">Search &amp; Planning</h3>
-            <p class="journey-card__text">Learn BFS, DFS, A*, heuristic search, local search and optimization.</p>
+            <p class="card__kicker">Teaching Assistant</p>
+            <h3 class="card__title">Enjamul Islam Khan</h3>
+            <p class="card__text">Teaching Assistant</p>
           </article>
 
-          <article class="card journey-card" data-reveal style="--reveal-delay:120ms">
-            <span class="journey-card__num" aria-hidden="true">03</span>
+          <article class="card info-card" data-reveal style="--reveal-delay:120ms">
             <div class="card__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
             </div>
-            <h3 class="journey-card__title">Reasoning &amp; Games</h3>
-            <p class="journey-card__text">Master Minimax, Alpha-Beta pruning and Constraint Satisfaction Problems.</p>
+            <p class="card__kicker">Credits</p>
+            <h3 class="card__title">3-0-3</h3>
+            <p class="card__text">Lecture &bull; Tutorial &bull; Practical</p>
           </article>
 
-          <article class="card journey-card" data-reveal>
-            <span class="journey-card__num" aria-hidden="true">04</span>
+          <article class="card info-card" data-reveal>
             <div class="card__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>
             </div>
-            <h3 class="journey-card__title">Probabilistic AI</h3>
-            <p class="journey-card__text">Bayesian Networks, inference, uncertainty and decision making.</p>
+            <p class="card__kicker">Classroom</p>
+            <h3 class="card__title">CS102</h3>
+            <p class="card__text">IIITDM Kurnool</p>
           </article>
 
-          <article class="card journey-card" data-reveal style="--reveal-delay:60ms">
-            <span class="journey-card__num" aria-hidden="true">05</span>
+          <article class="card info-card" data-reveal style="--reveal-delay:60ms">
             <div class="card__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6h4"/></svg>
             </div>
-            <h3 class="journey-card__title">Reinforcement Learning</h3>
-            <p class="journey-card__text">Markov Decision Processes, Q-Learning, SARSA and Policy Iteration.</p>
+            <p class="card__kicker">Class Schedule</p>
+            <div class="info-card__lines">
+              <div class="info-card__line">Wednesday &bull; 10:00 &ndash; 11:00</div>
+              <div class="info-card__line">Thursday &bull; 09:00 &ndash; 10:00</div>
+              <div class="info-card__line">Friday &bull; 10:00 &ndash; 11:00</div>
+            </div>
+            <p class="card__sub">Autumn 2026</p>
           </article>
 
-          <article class="card journey-card" data-reveal style="--reveal-delay:120ms">
-            <span class="journey-card__num" aria-hidden="true">06</span>
+          <article class="card info-card" data-reveal style="--reveal-delay:120ms">
             <div class="card__icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
             </div>
-            <h3 class="journey-card__title">Modern AI</h3>
-            <p class="journey-card__text">Deep Learning, Transformers, LLMs, Responsible AI and AI Safety.</p>
+            <p class="card__kicker">Email</p>
+            <h3 class="card__title">alapan.cse@iiitk.ac.in</h3>
+                  <p class="card__text">Office Hours: Friday after 2PM</p>
+          </article>
+
+          <article class="card info-card" data-reveal>
+            <div class="card__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+            </div>
+            <p class="card__kicker">Prerequisites</p>
+            <h3 class="card__title">Python Programming, Data Structures, Discrete Mathematics, Basic Probability, Linear Algebra</h3>
           </article>
         </div>
       </div>
@@ -626,7 +496,7 @@
                 </div>
                 <div class="instructor__row">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                  Office Hours: Monday 2PM&ndash;4PM
+                  Office Hours: Friday after 2PM
                 </div>
               </div>
             </div>
@@ -699,8 +569,8 @@
           <div class="footer__links">
             <a class="footer__link" href="#syllabus">Syllabus</a>
             <a class="footer__link" href="#schedule">Schedule</a>
-            <a class="footer__link" href="#journey">Assignments</a>
-            <a class="footer__link" href="#resources">Resources</a>
+            <a class="footer__link" href="#resources">Course Info</a>
+            <a class="footer__link" href="#contact">Contact</a>
           </div>
         </div>
 
@@ -732,7 +602,7 @@
 
       <div class="footer__bottom">
         <p class="footer__copy">&copy; <span id="year">2026</span> Artificial Intelligence (AD203) &bull; IIITDM Kurnool</p>
-        <p class="footer__made">Made by <strong>Aeternum</strong></p>
+        <p class="footer__made">Built by <a href="https://aeternumworks.in" target="_blank" rel="noopener"><strong>Aeternum Works</strong></a></p>
         <a class="back-top" href="#top">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
           Back to top
@@ -761,11 +631,9 @@
   </div>
 
   <!-- Watermark -->
-  <div class="watermark" aria-hidden="true">Made by <strong>Aeternum</strong></div>
+  <a class="watermark" href="https://aeternumworks.in" target="_blank" rel="noopener" aria-label="Built by Aeternum Works — visit aeternumworks.in">Built by <strong>Aeternum Works</strong></a>
 
   <script src="resources/data.js" defer></script>
-  <script src="assets/js/api.js" defer></script>
   <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/portal.js" defer></script>
 </body>
 </html>

@@ -326,4 +326,21 @@
   /* ---------------- Footer year ---------------- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ---------------- Interactive emoji trail (Aeternum Works) ---------------- */
+  var trailEmojis = ["✨", "⭐", "🚀", "💫", "🛠️"];
+  if ("matchMedia" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.addEventListener("pointermove", function (e) {
+      if (!e.target.closest) return;
+      var inside = e.target.closest(".watermark, .nav, .modal, a, button");
+      if (inside) return; // keep the watermark clickable and UI clean
+      var em = document.createElement("span");
+      em.className = "trail-emoji";
+      em.textContent = trailEmojis[Math.floor(Math.random() * trailEmojis.length)];
+      em.style.left = (e.clientX + (Math.random() * 24 - 12)) + "px";
+      em.style.top = (e.clientY + (Math.random() * 24 - 12)) + "px";
+      document.body.appendChild(em);
+      setTimeout(function () { em.remove(); }, 900);
+    }, { passive: true });
+  }
 })();

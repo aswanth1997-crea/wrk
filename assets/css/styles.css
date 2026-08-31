@@ -925,6 +925,17 @@ ul {
   padding: 1.75rem;
 }
 
+/* Solid white card backgrounds on small screens — avoids any
+   transparency/backdrop rendering quirks in mobile browsers */
+@media (max-width: 767px) {
+  .info-grid .card,
+  .section--white .card {
+    background: #ffffff;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
 .info-card__lines {
   display: grid;
   gap: 0.15rem;
@@ -1770,9 +1781,20 @@ ul {
   color: var(--color-muted);
 }
 
-.footer__made strong {
+.footer__made a {
   color: var(--color-night-body);
+  text-decoration: none;
   font-weight: 600;
+}
+
+.footer__made a:hover {
+  color: var(--color-brand, #4f46e5);
+  text-decoration: underline;
+}
+
+.footer__made strong {
+  color: inherit;
+  font-weight: inherit;
 }
 
 /* Fixed watermark — always visible at the bottom of the screen */
@@ -1784,7 +1806,7 @@ ul {
   font-size: 0.9rem;
   color: var(--color-night-body);
   opacity: 1;
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -1794,6 +1816,14 @@ ul {
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out);
+}
+
+.watermark:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .watermark strong {
@@ -1801,11 +1831,29 @@ ul {
   font-weight: 700;
 }
 
+/* Interactive emoji trail */
+.trail-emoji {
+  position: fixed;
+  z-index: 9998;
+  pointer-events: none;
+  font-size: 1.1rem;
+  animation: trail-float 0.9s ease-out forwards;
+}
+
+@keyframes trail-float {
+  0%   { opacity: 0; transform: translateY(0) scale(0.6); }
+  20%  { opacity: 0.9; transform: translateY(-8px) scale(1); }
+  100% { opacity: 0; transform: translateY(-34px) scale(0.9); }
+}
+
 @media (max-width: 768px) {
   .watermark {
     left: 50%;
     right: auto;
     transform: translateX(-50%);
+  }
+  .watermark:hover {
+    transform: translateX(-50%) translateY(-2px) scale(1.04);
   }
 }
 
