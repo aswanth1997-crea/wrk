@@ -571,6 +571,29 @@ ul {
   transform: translateY(0);
 }
 
+/* Solid white background for the mobile dropdown menu */
+@media (max-width: 767px) {
+  .nav.is-menu-open {
+    background: #ffffff;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 8px 24px rgba(28, 25, 23, 0.08);
+  }
+
+  .nav__mobile-inner {
+    background: #ffffff;
+  }
+
+  .nav__mobile-links .nav__link {
+    background: transparent;
+  }
+
+  .nav__mobile-links .nav__link:hover,
+  .nav__mobile-links .nav__link.is-active {
+    background: var(--color-primary-soft);
+  }
+}
+
 .nav__mobile-links .nav__link {
   padding: 0.8rem 0.9rem;
   font-size: 1rem;
