@@ -1,9 +1,7 @@
 /* ============================================================
    AD203 Portal — static site data
-   Single source of truth for the student portal and the
-   professor (management) page. No server, no database.
-
-   Add/edit resources here, then refresh the site.
+   Single source of truth for the student portal. No server,
+   no database. Add/edit resources here, then refresh the site.
    ============================================================ */
 window.COURSE_DATA = {
   courses: [
@@ -45,14 +43,5 @@ window.COURSE_DATA = {
       "session": "Introduction to Artificial Intelligence",
       "file": "resources/AD203/Unit-1/ai_iiitdmk_1st.pdf"
     }
-  ],
-
-  /* Static content mirrored from the site (kept here so the
-     professor page can show units; student portal already
-     hard-codes the same content in index.html). */
-  announcements: [],
-  dates: [],
-  assignments: [],
-  questions: [],
-  references: []
+  ]
 };

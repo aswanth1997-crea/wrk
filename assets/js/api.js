@@ -7,7 +7,7 @@
   "use strict";
 
   function data() {
-    return global.COURSE_DATA || { courses: [], resources: [], announcements: [], dates: [], assignments: [], questions: [], references: [] };
+    return global.COURSE_DATA || { courses: [], resources: [] };
   }
 
   function firstCourse() {
@@ -23,7 +23,7 @@
 
   global.API = {
     courses: function () {
-      return Promise.resolve({ courses: data().courses, settings: {} });
+      return Promise.resolve({ courses: data().courses });
     },
     course: function (id) {
       var c = data().courses.find(function (x) { return x.id === id; }) || firstCourse();
@@ -32,14 +32,8 @@
     courseResources: function () {
       return Promise.resolve({ resources: courseResources() });
     },
-    courseAssignments: function () { return Promise.resolve({ assignments: data().assignments || [] }); },
-    courseQuestions: function () { return Promise.resolve({ questions: data().questions || [] }); },
-    courseAnnouncements: function () { return Promise.resolve({ announcements: data().announcements || [] }); },
-    courseDates: function () { return Promise.resolve({ dates: data().dates || [] }); },
-    courseReferences: function () { return Promise.resolve({ references: data().references || [] }); },
-
-    // Static resource registry for the professor (management) page
-    resourceRegistry: function () { return courseResources(); },
-    allUnits: function () { return firstCourse().units || []; }
+    courseAssignments: function () { return Promise.resolve({ assignments: [] }); },
+    courseQuestions: function () { return Promise.resolve({ questions: [] }); },
+    courseReferences: function () { return Promise.resolve({ references: [] }); }
   };
 })(window);

@@ -2,8 +2,8 @@
    AD203 Course Portal — student portal JS
    Renders the student-facing site from the static COURSE_DATA
    (resources/data.js). No server required.
-   Includes: course switcher, dashboard, tabs, search/filter,
-   announcements, dates, syllabus (units/topics), schedule.
+   Includes: course switcher, resource hub tabs, search/filter,
+   syllabus (units/topics), schedule.
    ============================================================ */
 (function () {
   "use strict";
@@ -15,8 +15,6 @@
     resources: [],
     assignments: [],
     questions: [],
-    announcements: [],
-    dates: [],
     references: [],
     searchQ: "",
     filterUnit: "",
@@ -155,17 +153,13 @@
         API.courseResources(id),
         API.courseAssignments(id),
         API.courseQuestions(id),
-        API.courseAnnouncements(id),
-        API.courseDates(id),
         API.courseReferences(id)
       ]);
       currentCourse = all[0].course;
       state.resources = all[1].resources || [];
       state.assignments = all[2].assignments || [];
       state.questions = all[3].questions || [];
-      state.announcements = all[4].announcements || [];
-      state.dates = all[5].dates || [];
-      state.references = all[6].references || [];
+      state.references = all[4].references || [];
       populateUnitFilter();
       renderAll();
     } catch (e) {
@@ -174,8 +168,7 @@
   }
 
   function renderEmptyAll() {
-    ["dashAnnouncements", "dashDates", "dashUploads", "announceList", "datesTimeline",
-     "panel-units", "panel-ppts", "panel-materials", "panel-assignments", "panel-questions", "panel-references"
+    ["panel-units", "panel-ppts", "panel-materials", "panel-assignments", "panel-questions", "panel-references"
     ].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.innerHTML = '<div class="hub-empty">' + ICONS.empty + "<p>Data unavailable</p></div>";
@@ -183,67 +176,6 @@
   }
 
   /* ---------------- Renderers ---------------- */
-  function renderDashboard() {
-    var dA = document.getElementById("dashAnnouncements");
-    var dD = document.getElementById("dashDates");
-    var dU = document.getElementById("dashUploads");
-
-    var anns = state.announcements.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }).slice(0, 3);
-    var today = new Date().toISOString().slice(0, 10);
-    var dates = state.dates.slice().filter(function (d) { return d.date >= today; }).sort(function (a, b) { return a.date.localeCompare(b.date); }).slice(0, 3);
-    var ups = state.resources.slice().slice(0, 3);
-
-    if (dA) dA.innerHTML = anns.map(function (a) {
-      return '<div class="dash-item"><span class="dash-item__icon">' + ICONS.megaphone + "</span>" +
-        '<div class="dash-item__body"><div class="dash-item__title">' + esc(a.title) + "</div>" +
-        '<div class="dash-item__meta">' + esc(a.tag || "Notice") + " &middot; " + esc(fmtShort(a.date)) + "</div></div></div>";
-    }).join("") || '<div class="hub-empty">' + ICONS.empty + "<p>No announcements</p></div>";
-
-    if (dD) dD.innerHTML = dates.map(function (d) {
-      return '<div class="dash-item"><span class="dash-item__icon">' + ICONS.calendar + "</span>" +
-        '<div class="dash-item__body"><div class="dash-item__title">' + esc(d.title) + "</div>" +
-        '<div class="dash-item__meta">' + esc(fmtShort(d.date)) + " &middot; " + esc(d.type) + "</div></div></div>";
-    }).join("") || '<div class="hub-empty">' + ICONS.empty + "<p>No upcoming dates</p></div>";
-
-    if (dU) dU.innerHTML = ups.map(function (r) {
-      return '<div class="dash-item"><span class="dash-item__icon">' + ICONS.upload + "</span>" +
-        '<div class="dash-item__body"><div class="dash-item__title">' + esc(r.title) + "</div>" +
-        '<div class="dash-item__meta">' + esc(r.unit || "Unit") + " &middot; " + esc(typeLabel(r.type)) + "</div></div></div>";
-    }).join("") || '<div class="hub-empty">' + ICONS.empty + "<p>No uploads yet</p></div>";
-  }
-
-  function renderAnnouncements() {
-    var list = document.getElementById("announceList");
-    if (!list) return;
-    var items = state.announcements.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
-    list.innerHTML = items.map(function (a) {
-      return '<article class="announce-card' + (a.pinned ? " is-pinned" : "") + '" data-reveal>' +
-        '<div class="announce-card__head"><span class="announce-card__tags">' +
-          '<span class="announce-tag">' + esc(a.tag || "Notice") + "</span>" +
-          (a.pinned ? '<span class="announce-tag announce-tag--pinned">Pinned</span>' : "") +
-        "</span><span class=\"announce-card__date\">" + esc(fmtDate(a.date)) + "</span></div>" +
-        '<h3 class="announce-card__title">' + esc(a.title) + "</h3>" +
-        '<p class="announce-card__body">' + esc(a.body) + "</p></article>";
-    }).join("") || '<div class="hub-empty">' + ICONS.empty + "<p>No announcements yet</p></div>";
-    observeReveals();
-  }
-
-  function renderDates() {
-    var tl = document.getElementById("datesTimeline");
-    if (!tl) return;
-    var today = new Date().toISOString().slice(0, 10);
-    var items = state.dates.slice().sort(function (a, b) { return a.date.localeCompare(b.date); });
-    tl.innerHTML = items.map(function (d) {
-      var cls = d.date < today ? "is-past" : d.date === today ? "is-today" : "";
-      var p = String(d.date).split("-");
-      var mon = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][parseInt(p[1], 10) - 1] || "";
-      return '<div class="dates-item ' + cls + '" data-reveal>' +
-        '<div class="dates-item__badge"><span class="dates-item__day">' + parseInt(p[2], 10) + '</span><span class="dates-item__mon">' + mon + " " + (p[0] || "") + "</span></div>" +
-        '<div class="dates-item__card"><div class="dates-item__title">' + esc(d.title) + "</div>" +
-        '<span class="dates-item__type">' + esc(d.type) + "</span></div></div>";
-    }).join("") || '<div class="hub-empty">' + ICONS.empty + "<p>No dates scheduled</p></div>";
-    observeReveals();
-  }
 
   function renderUnits() {
     var panel = document.getElementById("panel-units");
@@ -432,9 +364,6 @@
   }
 
   function renderAll() {
-    renderDashboard();
-    renderAnnouncements();
-    renderDates();
     renderUnits();
     renderResources();
     renderAssignments();
