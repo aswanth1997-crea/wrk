@@ -327,20 +327,46 @@
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------------- Interactive emoji trail (Aeternum Works) ---------------- */
-  var trailEmojis = ["✨", "⭐", "🚀", "💫", "🛠️"];
-  if ("matchMedia" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  /* ---------------- Custom cursor ---------------- */
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (finePointer && !prefersReduced) {
+    document.body.classList.add("custom-cursor-active");
+    var dot = document.createElement("div");
+    dot.className = "custom-cursor custom-cursor--dot";
+    var ring = document.createElement("div");
+    ring.className = "custom-cursor custom-cursor--ring";
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    var mx = -100, my = -100, rx = -100, ry = -100;
+    var raf = null;
+
+    function render() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      dot.style.transform = "translate(" + mx + "px, " + my + "px) translate(-50%, -50%)";
+      ring.style.transform = "translate(" + rx + "px, " + ry + "px) translate(-50%, -50%)";
+      if (Math.abs(mx - rx) > 0.5 || Math.abs(my - ry) > 0.5) raf = requestAnimationFrame(render);
+      else raf = null;
+    }
+
     document.addEventListener("pointermove", function (e) {
-      if (!e.target.closest) return;
-      var inside = e.target.closest(".watermark, .nav, .modal, a, button");
-      if (inside) return; // keep the watermark clickable and UI clean
-      var em = document.createElement("span");
-      em.className = "trail-emoji";
-      em.textContent = trailEmojis[Math.floor(Math.random() * trailEmojis.length)];
-      em.style.left = (e.clientX + (Math.random() * 24 - 12)) + "px";
-      em.style.top = (e.clientY + (Math.random() * 24 - 12)) + "px";
-      document.body.appendChild(em);
-      setTimeout(function () { em.remove(); }, 900);
+      mx = e.clientX; my = e.clientY;
+      dot.style.opacity = "1"; ring.style.opacity = "1";
+      if (!raf) raf = requestAnimationFrame(render);
     }, { passive: true });
+
+    document.addEventListener("pointerdown", function () { ring.classList.add("is-pressed"); });
+    document.addEventListener("pointerup", function () { ring.classList.remove("is-pressed"); });
+
+    document.addEventListener("pointerover", function (e) {
+      var t = e.target;
+      var interactive = t.closest && t.closest("a, button, [role=button], input, select, textarea, .watermark, .accordion__trigger");
+      ring.classList.toggle("is-hover", !!interactive);
+    });
+
+    document.addEventListener("mouseleave", function () {
+      dot.style.opacity = "0"; ring.style.opacity = "0";
+    });
   }
 })();

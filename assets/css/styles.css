@@ -1831,19 +1831,56 @@ ul {
   font-weight: 700;
 }
 
-/* Interactive emoji trail */
-.trail-emoji {
-  position: fixed;
-  z-index: 9998;
-  pointer-events: none;
-  font-size: 1.1rem;
-  animation: trail-float 0.9s ease-out forwards;
+/* Custom cursor (fine pointers only) */
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"],
+  body.custom-cursor-active input,
+  body.custom-cursor-active select,
+  body.custom-cursor-active textarea,
+  body.custom-cursor-active .watermark {
+    cursor: none;
+  }
 }
 
-@keyframes trail-float {
-  0%   { opacity: 0; transform: translateY(0) scale(0.6); }
-  20%  { opacity: 0.9; transform: translateY(-8px) scale(1); }
-  100% { opacity: 0; transform: translateY(-34px) scale(0.9); }
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.custom-cursor--dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-brand, #4f46e5);
+}
+
+.custom-cursor--ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--color-brand, #4f46e5);
+  transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, opacity 0.2s ease;
+}
+
+.custom-cursor--ring.is-hover {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(79, 70, 229, 0.5);
+  background: rgba(79, 70, 229, 0.08);
+}
+
+.custom-cursor--ring.is-pressed {
+  width: 28px;
+  height: 28px;
+  background: rgba(79, 70, 229, 0.2);
 }
 
 @media (max-width: 768px) {
